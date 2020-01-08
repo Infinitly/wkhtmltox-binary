@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+
+require 'rbconfig'
+
+suffix = case RbConfig::CONFIG['host_os']
+         when /linux/
+           os = `. /etc/os-release 2> /dev/null && echo ${ID}_${VERSION_ID}`.strip
+
+           # CentOS 6 doesn't have `/etc/os-release`.
+           if os.empty? && File.read('/etc/centos-release').start_with?('CentOS release 6')
+             os = 'centos_6'
+           end
+
+           architecture = case RbConfig::CONFIG['host_cpu']
+           when 'x86_64'
+             'amd64'
+           when 'arm'
+             'armhf'
+           else
+             'i386'
+           end
+
+           "#{os}_#{architecture}"
+         when /darwin/
+           RbConfig::CONFIG['host_cpu'] == 'x86_64' ? 'macos_cocoa' : 'macos_carbon'
+         else
+           raise 'Invalid platform. Must be running on linux or intel-based Mac OS.'
+         end
+
+binary = File.join(File.dirname(__dir__), 'lib', 'wkhtmltopdf', 'binaries', suffix, 'wkhtmltopdf')
+
+unless File.exist?(binary)
+  raise 'Invalid platform. Must be running on linux or intel-based Mac OS.'
+end
+
+exec *$*.unshift(binary)
