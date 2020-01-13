@@ -25,6 +25,26 @@ class DockerSpec < Minitest::Test
     docker_run with: 'debian_10'
   end
 
+  def test_fedora_29
+    docker_run with: 'fedora_29'
+  end
+
+  def test_fedora_30
+    docker_run with: 'fedora_30'
+  end
+
+  def test_fedora_31
+    docker_run with: 'fedora_31'
+  end
+
+  def test_fedora_32
+    docker_run with: 'fedora_32'
+  end
+
+  def test_fedora_33
+    docker_run with: 'fedora_33'
+  end
+
   def test_ubuntu_14_04
     docker_run with: 'ubuntu_14.04'
   end

@@ -1,0 +1,8 @@
+/.docker
+/.git
+/test
+
+.gitattributes
+.gitignore
+Gemfile.lock
+*.gem

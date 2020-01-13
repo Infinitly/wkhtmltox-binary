@@ -1,0 +1,7 @@
+FROM fedora:32
+
+RUN yum install -y ruby libjpeg-turbo libpng libXrender fontconfig libXext
+
+COPY . /root/wkhtmltox-binary
+
+CMD /root/wkhtmltox-binary/exe/wkhtmltopdf --version

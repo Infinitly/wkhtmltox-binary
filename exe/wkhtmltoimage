@@ -5,11 +5,16 @@ require 'zlib'
 
 suffix = case RbConfig::CONFIG['host_os']
          when /linux/
-           os = `. /etc/os-release 2> /dev/null && echo ${ID}_${VERSION_ID}`.strip
+           os_name = `. /etc/os-release 2> /dev/null && echo ${ID}`.strip
+           os_version = `. /etc/os-release 2> /dev/null && echo ${VERSION_ID}`.strip
 
            # CentOS 6 doesn't have `/etc/os-release`.
-           if os.empty? && File.read('/etc/centos-release').start_with?('CentOS release 6')
+           if os_name.empty? && File.read('/etc/centos-release').start_with?('CentOS release 6')
              os = 'centos_6'
+           elsif os_name == 'fedora' && os_version.to_i >= 29
+             os = 'centos_8'
+           else
+             os = "#{os_name}_#{os_version}"
            end
 
            architecture = case RbConfig::CONFIG['host_cpu']
