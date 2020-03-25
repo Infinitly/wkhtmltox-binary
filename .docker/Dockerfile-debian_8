@@ -1,0 +1,8 @@
+FROM debian:8
+
+RUN apt-get update -qq
+RUN apt-get install -y ruby libjpeg62-turbo libpng12-0 libxrender1 libfontconfig1 libxext6
+
+COPY . /root/wkhtmltox-binary
+
+CMD /root/wkhtmltox-binary/exe/wkhtmltopdf --version
