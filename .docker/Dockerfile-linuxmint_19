@@ -1,0 +1,8 @@
+FROM linuxmintd/mint19-amd64
+
+RUN apt-get update -qq
+RUN apt-get install -y ruby libjpeg8 libxrender1 libfontconfig1 libc6
+
+COPY . /root/wkhtmltox-binary
+
+CMD /root/wkhtmltox-binary/exe/wkhtmltopdf --version

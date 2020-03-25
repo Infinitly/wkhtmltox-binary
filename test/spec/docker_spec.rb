@@ -53,6 +53,18 @@ class DockerSpec < Minitest::Test
     docker_run with: 'fedora_33'
   end
 
+  def test_linuxmint_17
+    docker_run with: 'linuxmint_17'
+  end
+
+  def test_linuxmint_18
+    docker_run with: 'linuxmint_18'
+  end
+
+  def test_linuxmint_19
+    docker_run with: 'linuxmint_19'
+  end
+
   def test_ubuntu_14_04
     docker_run with: 'ubuntu_14.04'
   end

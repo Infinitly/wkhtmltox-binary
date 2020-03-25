@@ -8,6 +8,17 @@ suffix = case RbConfig::CONFIG['host_os']
            os_name = `. /etc/os-release 2> /dev/null && echo ${ID}`.strip
            os_version = `. /etc/os-release 2> /dev/null && echo ${VERSION_ID}`.strip
 
+           if os_name == 'linuxmint'
+             os_name = 'ubuntu'
+             os_version = if os_version.to_i == 17
+                            os = '14.04'
+                          elsif os_version.to_i == 18
+                            os = '16.04'
+                          elsif os_version.to_i == 19
+                            os = '18.04'
+                          end
+           end
+
            # CentOS 6 doesn't have `/etc/os-release`.
            if os_name.empty? && File.read('/etc/centos-release').start_with?('CentOS release 6')
              os = 'centos_6'
@@ -20,13 +31,13 @@ suffix = case RbConfig::CONFIG['host_os']
            end
 
            architecture = case RbConfig::CONFIG['host_cpu']
-           when 'x86_64'
-             'amd64'
-           when 'arm'
-             'armhf'
-           else
-             'i386'
-           end
+                          when 'x86_64'
+                            'amd64'
+                          when 'arm'
+                            'armhf'
+                          else
+                            'i386'
+                          end
 
            "#{os}_#{architecture}"
          when /darwin/
