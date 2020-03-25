@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'rbconfig'
+require 'zlib'
 
 suffix = case RbConfig::CONFIG['host_os']
          when /linux/
@@ -27,7 +28,14 @@ suffix = case RbConfig::CONFIG['host_os']
            raise 'Invalid platform. Must be running on linux or intel-based Mac OS.'
          end
 
-binary = File.join(File.dirname(__dir__), 'lib', 'wkhtmltopdf', 'binaries', suffix, 'wkhtmltopdf')
+basedir = __FILE__.sub(%r{/exe/wkhtmltopdf$}, '')
+binary = File.join(basedir, 'lib', 'wkhtmltopdf', 'binaries', suffix, 'wkhtmltopdf')
+
+if !File.exist?(binary) && File.exist?("#{binary}.gz")
+  File.open(binary, 'wb', 0o755) do |file|
+    Zlib::GzipReader.open("#{binary}.gz") { |gzip| file << gzip.read }
+  end
+end
 
 unless File.exist?(binary)
   raise 'Invalid platform. Must be running on linux or intel-based Mac OS.'

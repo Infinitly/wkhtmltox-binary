@@ -1,0 +1,2 @@
+lib/wkhtmltoimage/binaries/*/wkhtmltoimage.gz filter=lfs diff=lfs merge=lfs -text
+lib/wkhtmltopdf/binaries/*/wkhtmltopdf.gz filter=lfs diff=lfs merge=lfs -text
