@@ -25,6 +25,14 @@ class DockerSpec < Minitest::Test
     docker_run with: 'debian_10'
   end
 
+  def test_elementary_juno
+    docker_run with: 'elementary_juno'
+  end
+
+  def test_elementary_loki
+    docker_run with: 'elementary_loki'
+  end
+
   def test_fedora_29
     docker_run with: 'fedora_29'
   end

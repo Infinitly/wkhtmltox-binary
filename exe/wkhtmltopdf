@@ -13,6 +13,8 @@ suffix = case RbConfig::CONFIG['host_os']
              os = 'centos_6'
            elsif os_name == 'fedora' && os_version.to_i >= 29
              os = 'centos_8'
+           elsif os_name == 'elementary' && os_version.start_with?(/5\.(0|1)/)
+             os = 'ubuntu_18.04'
            else
              os = "#{os_name}_#{os_version}"
            end

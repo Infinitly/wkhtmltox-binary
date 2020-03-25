@@ -1,0 +1,8 @@
+FROM elementary/docker:loki-stable
+
+RUN apt-get update -qq
+RUN apt-get install -y ruby libjpeg8 libxrender1 libfontconfig1
+
+COPY . /root/wkhtmltox-binary
+
+CMD /root/wkhtmltox-binary/exe/wkhtmltopdf --version
